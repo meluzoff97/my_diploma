@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}Договор{% endblock %}
+{% block body %}
+    <legend>Новый договор</legend>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        <table width="100%" cellspacing="0" cellpadding="3%">
+        <tr>
+            <td align="left" width="20%">Фамилия</td>
+            <td>{{ form.surname }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Имя</td>
+            <td>{{ form.forename }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Отчество</td>
+            <td>{{ form.middle }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Дата рождения</td>
+            <td>{{ form.born_date }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Паспорт/свидетельство (до 14 лет)</td>
+            <td>{{ form.main_doc }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">E-mail</td>
+            <td>{{ form.mail }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Мобильный телефон</td>
+            <td>{{ form.contact }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Адрес проживания</td>
+            <td>{{ form.addr }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Срок</td>
+            <td>{{ form.tco_length }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Серия договора</td>
+            <td>
+                <select id="serie" name="serie" style="width: 36%" required>
+	            <option value="">Выберите серию</option>
+                {% for serie in series %}
+                <option value="{{ serie.id }}">{{ serie.tcss_val }}-{{ serie.tcss_desc }}</option>
+                {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Частота оплаты</td>
+            <td>
+                <select id="freq" name="freq" style="width: 36%" required>
+	            <option value="">Выберите частоту оплаты</option>
+                {% for freq in freqs %}
+                <option value="{{ freq.id }}">{{ freq.tfp_val }}</option>
+                {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+        <td></td>
+        <td><button type="submit" class="save btn btn-dark">Сохранить</button></td>
+        </tr>
+        </table>
+        {% if args.login_error %}
+        <p>Ошибка: {{ args.login_error }}</p>
+        {% endif %}
+    </form>
+    <script>
+    $("#serie").select2( {
+        language: {
+            "noResults": function(){
+                return "Нет результатов";
+                    }},
+	    placeholder: "Серия",
+	    allowClear: true
+	} );
+    </script>
+    <script>
+    $("#freq").select2( {
+        language: {
+            "noResults": function(){
+                return "Нет результатов";
+                    }},
+        placeholder: "Частота оплаты",
+        allowClear: true
+	} );
+    </script>
+
+{% endblock %}

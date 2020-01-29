@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Агент{% endblock %}
+{% block body %}
+    <legend>Новый агент</legend>
+    <form method="POST" enctype="multipart/form-data" class="post-form">
+        {% csrf_token %}
+        <table width="100%" cellspacing="0" cellpadding="3%">
+        <tr>
+            <td align="left" width="20%">Фамилия</td>
+            <td>{{ form.surname }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Имя</td>
+            <td>{{ form.forename }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Отчество</td>
+            <td>{{ form.middle }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Дата рождения</td>
+            <td>{{ form.born_date }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Паспорт</td>
+            <td>{{ form.main_doc }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Дата начала работы</td>
+            <td>{{ form.tde_start }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Логин пользователя</td>
+            <td>{{ form.user_login }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Рабочая почта</td>
+            <td>{{ form.work_mail }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Фото сотрудника</td>
+            <td>{{ form.photo }} </td>
+        </tr>
+        <tr>
+        <td></td>
+        <td><button type="submit" class="save btn btn-outline-dark">Сохранить</button></td>
+        </tr>
+        </table>
+        {% if args.login_error %}
+        <p>Ошибка: {{ args.login_error }}</p>
+        {% endif %}
+    </form>
+{% endblock %}

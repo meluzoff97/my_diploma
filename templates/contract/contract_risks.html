@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Договор{% endblock %}
+{% block body %}
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        <legend>Выбор рисков для договора</legend>
+        <table width="100%" cellspacing="0" cellpadding="3%">
+        <tr>
+            <td align="left" width="20%">Риски</td>
+            <td>
+                 {% for risk in form.contract_risks %}
+                 <h6>{{risk.tag}}
+                 <label for="{{risk.id_for_label}}">{{risk.choice_label}}</label></h6>
+                 {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Страховая премия</td>
+            <td>{{ form.contract_sum }}</td>
+        </tr>
+        <tr>
+        <td></td>
+        <td><button type="submit" class="save btn btn-dark">Далее</button></td>
+        </tr>
+        </table>
+    </form>
+{% endblock %}

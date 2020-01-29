@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+.container-fluid{
+ width:40%;
+ background-image: linear-gradient(to right top, white, grey);
+ margin: 10% 30% 10% 30%;
+ text-align: center;
+ box-shadow: 0 -5px 0 #3adbfd;
+ padding-bottom: 2%;
+ border-radius: 10%;
+}
+
+h3,a,li{
+ font-family: Montserrat;
+}
+
+.container img{
+ width:20%;
+ height:20%;
+ margin: -5% 0 3% 0;
+ border: 2px solid #1a394f;
+ border-radius: 50%;
+ box-shadow: 0 -5px 0 #3adbfd;
+}
+
+button, input {
+    overflow: visible;
+    display: block;
+    margin: 0 auto;
+    font-family: Montserrat;
+}
+
+button{
+ width: 40%;
+ height: 7%;
+}
+
+input{
+ width: 60%;
+ height: 6%;
+}
+
+
+td,th {
+ text-align: center;
+}
+
+

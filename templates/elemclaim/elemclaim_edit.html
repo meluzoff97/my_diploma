@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}ЭСС{% endblock %}
+{% block body %}
+    <legend>Данные ЭСС</legend>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        <table width="100%" cellspacing="0" cellpadding="3%">
+        <tr>
+            <td align="left" width="20%">Риск ЭСС</td>
+            <td>{{ elemclaim.tel_rsk_id.rsk_name }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Максимальная сумма выплаты по ЭСС</td>
+            <td>{{ elemclaim.tel_sum }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Сумма выплаты по ЭСС</td>
+            <td>{{ form.tel_sum_fact }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Серия договора</td>
+            <td>
+            <select id="status" name="status" style="width: 36%" required>
+	        <option value="">Выберите статус</option>
+            {% for status in statuses %}
+                <option value="{{ status.id }}" {% if elemclaim.tel_tcs_id_id == status.id %} selected {% endif %}>{{ status.tcs_val }}</option>
+            {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+        <td></td>
+        <td><button type="submit" class="save btn btn-dark">Сохранить</button></td>
+        </tr>
+        </table>
+    </form>
+    <script>
+    $("#status").select2( {
+        language: {
+            "noResults": function(){
+                return "Нет результатов";
+                    }},
+	    placeholder: "Статус ЭСС",
+	    allowClear: true
+	} );
+    </script>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Страховой случай{% endblock %}
+{% block body %}
+    <legend>Новый страховой случай</legend>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        <table width="100%" cellspacing="0" cellpadding="3%">
+        <tr>
+            <td align="left" width="20%">Дата случая</td>
+            <td>{{ form.tiv_date }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Время случая</td>
+            <td>{{ form.tiv_time }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Описание случая</td>
+            <td>{{ form.tiv_desc }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Договор</td>
+            <td>
+                <select id="contract" name="contract" style="width: 36%" required>
+	            <option value="">Выберите договор</option>
+                {% for contract in contracts %}
+                <option value="{{ contract.id }}">{{ contract.tco_number }}</option>
+                {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+        <td></td>
+        <td><button type="submit" class="save btn btn-dark">Сохранить</button></td>
+        </tr>
+        </table>
+        {% if args.login_error %}
+        <p>Ошибка: {{ args.login_error }}</p>
+        {% endif %}
+    </form>
+    <script>
+    $("#contract").select2( {
+        language: {
+            "noResults": function(){
+                return "Нет результатов";
+                    }},
+	    placeholder: "Номер договора",
+	    allowClear: true
+	} );
+    </script>
+{% endblock %}

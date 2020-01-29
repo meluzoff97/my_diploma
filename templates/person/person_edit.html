@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Клиент{% endblock %}
+{% block body %}
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        <legend>Изменение данных клиента</legend>
+        <table width="100%" cellspacing="0" cellpadding="3%">
+        <tr>
+            <td align="left" width="20%">Фамилия</td>
+            <td>{{ form.tpr_surname }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Имя</td>
+            <td>{{ form.tpr_forename }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Отчество</td>
+            <td>{{ form.tpr_middle }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Дата рождения</td>
+            <td>{{ form.tpr_born_date }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Паспорт/свидетельство</td>
+            <td>{{ form.tpr_main_doc }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Психические отклонения</td>
+            <td>{{ form.tpr_psycho }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Убыточный</td>
+            <td>{{ form.tpr_unprofit }} </td>
+        </tr>
+        <tr>
+        <td></td>
+        <td><button type="submit" class="save btn btn-dark">Сохранить</button></td>
+        </tr>
+        </table>
+    </form>
+{% endblock %}

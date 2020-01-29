@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Клиенты{% endblock %}
+{% block body %}
+    {% if persons %}
+        <table class="table table-striped table-bordered" id="my_data">
+            <thead>
+            <tr>
+                <th>ФИО</th>
+                <th>Паспорт/свидетельство о рождении</th>
+                <th>Дата рождения</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for person in persons %}
+            <tr>
+                <td><a href="{% url 'person_detail' person.id %}">{{ person.tpr_surname }} {{ person.tpr_forename }} {{ person.tpr_middle }}</a></td>
+                <td>{{ person.tpr_main_doc }}</td>
+                <td>{{ person.tpr_born_date }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <ul>Нет клиентов</ul>
+    {% endif %}
+{% endblock %}

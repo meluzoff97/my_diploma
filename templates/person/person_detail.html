@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Клиент{% endblock %}
+{% block body %}
+        <legend>{{ person.tpr_surname }} {{ person.tpr_forename }} {{ person.tpr_middle }}</legend>
+        <table width="100%" cellspacing="0" cellpadding="3%">
+        <tr>
+            <td align="left" width="20%">Дата рождения</td>
+            <td>{{ person.tpr_born_date }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Паспорт/свидетельство (до 14 лет)</td>
+            <td>{{ person.tpr_main_doc }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Психические отклонения</td>
+            {% if person.tpr_psycho is True %}
+            <td>Да</td>
+            {% elif person.tpr_psycho is False %}
+            <td>Нет</td>
+            {% else %}
+            <td>Нет данных</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td align="left" width="20%">Убыточный</td>
+            {% if person.tpr_unprofit is True %}
+            <td>Да</td>
+            {% elif person.tpr_unprofit is False %}
+            <td>Нет</td>
+            {% else %}
+            <td>Нет данных</td>
+            {% endif %}
+        </tr>
+        {% if group == 5 %}
+        <tr>
+        <td></td>
+        <td><a class="btn btn-danger" href="{% url 'person_edit' person.id %}">Изменить данные</a></td>
+        </tr>
+        {% endif %}
+        </table>
+        {% if contracts %}
+        <legend>Договоры клиента</legend>
+        <table class="table table-striped table-bordered" id="second_table">
+            <thead>
+            <tr>
+                <th>Договор</th>
+                <th>Продукт страхования</th>
+                <th>Статус договора</th>
+                <th>Периодичность оплаты</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for contract in contracts %}
+            <tr>
+                <td><a href="{% url 'contract_detail' contract.id %}">{{ contract.tco_number }}</a></td>
+                <td>{{ contract.tco_tcss_id.tcss_val }}</td>
+                <td>{{ contract.tco_tcs_id.tcs_val }}</td>
+                <td>{{ contract.tco_tfp_id.tfp_val }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        {% if contacts %}
+        <legend>Контактная информация</legend>
+        <table class="table table-striped table-bordered" id="third_table">
+            <thead>
+            <tr>
+                <th>Тип контакта</th>
+                <th>Контакт</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for contact in contacts %}
+            <tr>
+                <td>{{ contact.con_tct_id.tct_val }}</td>
+                <td>{{ contact.con_val }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+<script>
+    $(document).ready(function() {
+        $('#second_table').DataTable( {
+        dom: 'frtp',
+            language: {
+                "zeroRecords": "Нет похожих записей",
+                "info": "Показана _PAGE_ страница из _PAGES_",
+                "infoEmpty": "Нет записей",
+                "infoFiltered": "(Выбрано из _MAX_ записей)",
+                "search": "Поиск:",
+                "paginate": {
+                "next": "Следующая", "previous": "Предыдущая"},
+                "lengthMenu": "Показать _MENU_ записей"
+        },
+    } );
+} )
+    ;
+</script>
+<script>
+    $(document).ready(function() {
+        $('#third_table').DataTable( {
+        dom: 'frtp',
+            language: {
+                "zeroRecords": "Нет похожих записей",
+                "info": "Показана _PAGE_ страница из _PAGES_",
+                "infoEmpty": "Нет записей",
+                "infoFiltered": "(Выбрано из _MAX_ записей)",
+                "search": "Поиск:",
+                "paginate": {
+                "next": "Следующая", "previous": "Предыдущая"},
+                "lengthMenu": "Показать _MENU_ записей"
+        },
+    } );
+} )
+    ;
+</script>
+{% endblock %}

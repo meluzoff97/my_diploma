@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %}Отчет{% endblock %}
+{% block body %}
+    <body>
+    <legend>Параметры построения отчета</legend>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        <table width="100%" cellspacing="0" cellpadding="3%">
+        <tr>
+            <td align="left" width="20%">Серия договора</td>
+            <td>
+                <select id="serie" name="serie" style="width: 34%">
+	            <option value="">Выберите серию</option>
+                {% for serie in series %}
+                <option value="{{ serie.id }}">{{ serie.tcss_val }}-{{ serie.tcss_desc }}</option>
+                {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Статус договора</td>
+            <td>
+            <select id="status" name="status" style="width: 34%">
+	        <option value="">Выберите статус</option>
+            {% for status in statuses %}
+                <option value="{{ status.id }}">{{ status.tcs_val }}</option>
+            {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">В разрезе</td>
+            <td>
+                <select id="group_by" name="group_by" style="width: 34%" required>
+	            <option value="">В разрезе ...</option>
+                <option value="1">Продуктов</option>
+                <option value="2">Статусов</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+        <td></td>
+        <td><button type="submit" class="save btn btn-dark">Построить</button></td>
+        </tr>
+        </table>
+
+    </form>
+    {% if param %}
+    {% if data %}
+        <table class="cell-border" id="report">
+            <thead>
+            <tr>
+                {% if param == 1 %}
+                <th>Продукт</th>
+                {% else %}
+                <th>Статус</th>
+                {% endif %}
+                <th>Количество</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in data %}
+            <tr>
+                <td>{{ i.val }}</td>
+                <td>{{ i.tco_count }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+    <p>К сожалению, по вашим параметрам ничего не найдено...</p>
+    {% endif %}
+    {% endif %}
+    <script>
+    $("#group_by").select2( {
+        language: {
+            "noResults": function(){
+                return "Нет результатов";
+                    }},
+	    placeholder: "В разрезе...",
+	    allowClear: true
+	} );
+    </script>
+    <script>
+    $("#serie").select2( {
+        language: {
+            "noResults": function(){
+                return "Нет результатов";
+                    }},
+	    placeholder: "Серия",
+	    allowClear: true
+	} );
+    </script>
+    <script>
+    $("#status").select2( {
+        language: {
+            "noResults": function(){
+                return "Нет результатов";
+                    }},
+	    placeholder: "Статус",
+	    allowClear: true
+	} );
+    </script>
+    <script>
+    $(document).ready(function() {
+        $('#report').DataTable( {
+        dom: 'B',
+            buttons: [
+                'excel'
+                     ],
+            language: {
+                "zeroRecords": "Нет похожих записей",
+                "info": "Показана _PAGE_ страница из _PAGES_",
+                "infoEmpty": "Нет записей",
+                "infoFiltered": "(Выбрано из _MAX_ записей)",
+                "search": "Поиск:",
+                "paginate": {
+                "next": "Следующая", "previous": "Предыдущая"},
+                "lengthMenu": "Показать _MENU_ записей"
+        },
+    } );
+} )
+    ;
+</script>
+
+{% endblock %}

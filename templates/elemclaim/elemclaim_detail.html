@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}ЭСС{% endblock %}
+{% block body %}
+        <legend>ЭСС-деталь</legend>
+        <table width="100%" cellspacing="0" cellpadding="3%">
+        <tr>
+            <td align="left" width="20%">Страховой случай</td>
+            <td><a href="{% url 'event_detail' elemclaim.tel_tiv_id_id %}">Открыть</a></td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Риск</td>
+            <td>{{ elemclaim.tel_rsk_id.rsk_name }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Статус рассмотрения</td>
+            <td>{{ elemclaim.tel_tcs_id.tcs_val }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Максимальная сумма</td>
+            <td>{{ elemclaim.tel_sum }}</td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Фактическая сумма</td>
+            {% if elemclaim.tel_sum_fact %}
+            <td>{{ elemclaim.tel_sum_fact }}</td>
+            {% endif %}
+        </tr>
+        {% if group == 3 %}
+        {% if elemclaim.tel_tcs_id_id < 3 %}
+        <tr>
+        <td></td>
+        <td><a class="btn btn-danger" href="{% url 'elemclaim_edit' elemclaim.id %}">Рассмотреть событие</a></td>
+        </tr>
+        {% endif %}
+        {% endif %}
+        </table>
+{% endblock %}

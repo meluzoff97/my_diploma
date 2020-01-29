@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block style %}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.column {
+  float: left;
+  width: 20%;
+  padding: 0 10px;
+}
+
+.row {margin: 0 -5px;}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: white;
+}
+{% endblock %}
+
+{% block title %}Главная страница{% endblock %}
+{% block body %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% if my_top %}
+        <legend>Лидеры по продажам</legend>
+        <div class="row">
+        {% for i in my_top %}
+        <div class="column">
+        <div class="card">
+        <img class="card-img-top" src="/MyGW/InsCompany/media/{{ i.wp_photo }}" width="255px" height="200px">
+        <h6>Номер агента: {{ i.tde_number }}</h6>
+        <h6>Количество продаж: {{ i.my_count }}</h6>
+        </div>
+        </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

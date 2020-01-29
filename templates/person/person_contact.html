@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Контакт{% endblock %}
+{% block body %}
+    <legend>Новый контакт клиента</legend>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        <table width="100%" cellspacing="0" cellpadding="3%">
+        <tr>
+            <td align="left" width="20%">Контакт</td>
+            <td>{{ form.contact }} </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">ФИО клиента</td>
+            <td>
+            <select id="person" name="person" style="width: 36%" required>
+	        <option value="">ФИО</option>
+            {% for person in persons %}
+                <option value="{{ person.id }}">{{ person.tpr_surname }} {{ person.tpr_forename }} {{ person.tpr_middle }} , № док-та: {{ person.tpr_main_doc }}</option>
+            {% endfor %}
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" width="20%">Тип контакта</td>
+            <td>
+            <select id="type" name="type" style="width: 36%" required>
+	        <option value="">Тип контакта</option>
+            {% for contact_type in contacts_types %}
+                <option value="{{ contact_type.id }}">{{ contact_type.tct_val }}</option>
+            {% endfor %}
+            </select>
+            </td>
+        </tr>
+        <tr>
+        <td></td>
+        <td><button type="submit" class="save btn btn-dark">Сохранить</button></td>
+        </tr>
+        </table>
+    </form>
+        <script>
+    $("#person").select2( {
+        language: {
+            "noResults": function(){
+                return "Нет результатов";
+                    }},
+	    placeholder: "ФИО клиента",
+	    allowClear: true
+	} );
+    </script>
+    <script>
+    $("#type").select2( {
+        language: {
+            "noResults": function(){
+                return "Нет результатов";
+                    }},
+        placeholder: "Тип контакта",
+        allowClear: true
+	} );
+    </script>
+{% endblock %}
